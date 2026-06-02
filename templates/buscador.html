@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscador de Productos</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 40px;">
+    <h2>Buscador de Productos (Modo API REST)</h2>
+    
+    <form id="formBuscador">
+        <label>Ingrese Código de Producto (Ej. P001, P002, P003):</label><br><br>
+        <input type="text" id="codigoProducto" required>
+        <button type="submit">Buscar</button>
+    </form>
+    <br>
+
+    <div id="mensajeError" style="color: red; font-weight: bold; display: none;"></div>
+    <div id="resultadoProducto" style="background-color: #f4f4f4; padding: 20px; border-radius: 5px; width: 450px; border: 1px solid #ccc; display: none;">
+        <h3 style="margin-top: 0;">Detalles del Producto:</h3>
+        <p><strong>Código:</strong> <span id="resCodigo"></span></p>
+        <p><strong>Nombre:</strong> <span id="resNombre"></span></p>
+        <p><strong>Descripción:</strong> <span id="resDesc"></span></p>
+        <p><strong>Categoría:</strong> <span id="resCat"></span></p>
+        <p><strong>Precio:</strong> S/. <span id="resPrecio"></span></p>
+        <p><strong>Stock:</strong> <span id="resStock"></span> unidades</p>
+    </div>
+
+    <hr>
+    <a href="{{ url_for('principal') }}"><button style="margin-right: 10px; padding: 5px 10px;">Regresar</button></a>
+    <a href="{{ url_for('logout') }}"><button style="padding: 5px 10px;">Salir del sistema</button></a>
+
+    <script>
+        document.getElementById('formBuscador').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const codigo = document.getElementById('codigoProducto').value;
+            const divError = document.getElementById('mensajeError');
+            const divResultado = document.getElementById('resultadoProducto');
+    
+            divError.style.display = 'none';
+            divResultado.style.display = 'none';
+
+            try {
+ 
+                const response = await fetch('/api/buscar_producto', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ codigo: codigo })
+                });
+
+                const json = await response.json();
+
+                if (response.ok && json.success) {
+                    // Si se encuentra, llenamos los datos con JS
+                    document.getElementById('resCodigo').textContent = json.data.codigo;
+                    document.getElementById('resNombre').textContent = json.data.nombre;
+                    document.getElementById('resDesc').textContent = json.data.descripcion;
+                    document.getElementById('resCat').textContent = json.data.categoria;
+                    document.getElementById('resPrecio').textContent = json.data.precio;
+                    document.getElementById('resStock').textContent = json.data.stock;
+                    
+                    divResultado.style.display = 'block'; // Mostramos la tarjeta
+                } else {
+                    divError.textContent = json.message || 'Producto no encontrado.';
+                    divError.style.display = 'block';
+                }
+            } catch (error) {
+                divError.textContent = 'Error de conexión con el servidor (API).';
+                divError.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

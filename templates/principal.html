@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Principal</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 40px;">
+    <h2>Bienvenido al Sistema, {{ session.nombre }}</h2>
+    <hr>
+    
+    <h3>Menú Principal</h3>
+    <ul>
+        <li><a href="{{ url_for('buscador') }}">Ir al Buscador de Productos</a></li>
+        <br>
+        <li><a href="{{ url_for('logout') }}">Salir del Sistema</a></li>
+    </ul>
+
+    <br><br>
+
+</body>
+</html>
