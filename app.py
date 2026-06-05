@@ -60,7 +60,7 @@ def login():
         else:
             flash('Credenciales incorrectas. Inténtalo de nuevo.')
             
-    return render_template('login.html')
+    return render_template('index.html')
 
 @app.route('/principal', methods=['GET'])
 def principal():
