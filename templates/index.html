@@ -7,15 +7,10 @@
 <body style="font-family: Arial, sans-serif; margin: 40px;">
     <h2>Iniciar Sesión</h2>
     
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
         <ul style="color: red; list-style-type: none; padding-left: 0;">
-        {% for message in messages %}
           <li><strong>Erro:</strong> {{ message }}</li>
-        {% endfor %}
+
         </ul>
-      {% endif %}
-    {% endwith %}
 
     <form method="POST">
         <label>Usuario:</label><br>
