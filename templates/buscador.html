@@ -7,7 +7,7 @@
 <body style="font-family: Arial, sans-serif; margin: 40px;">
     <h2>Buscador de Productos (Modo API REST)</h2>
     
-    <form id="formBuscador" action="https://examen-parcial-sistema-web-con-flask.onrender.com/login" method="POST"></form>>
+    <form id="formBuscador" action="https://examen-parcial-sistema-web-con-flask.onrender.com/login" method="POST">
         <label>Ingrese Código de Producto (Ej. P001, P002, P003):</label><br><br>
         <input type="text" id="codigoProducto" required>
         <button type="submit">Buscar</button>
@@ -53,7 +53,7 @@
                 const json = await response.json();
 
                 if (response.ok && json.success) {
-                    // Si se encuentra, llenamos los datos con JS
+
                     document.getElementById('resCodigo').textContent = json.data.codigo;
                     document.getElementById('resNombre').textContent = json.data.nombre;
                     document.getElementById('resDesc').textContent = json.data.descripcion;
@@ -61,7 +61,7 @@
                     document.getElementById('resPrecio').textContent = json.data.precio;
                     document.getElementById('resStock').textContent = json.data.stock;
                     
-                    divResultado.style.display = 'block'; // Mostramos la tarjeta
+                    divResultado.style.display = 'block';
                 } else {
                     divError.textContent = json.message || 'Producto no encontrado.';
                     divError.style.display = 'block';
